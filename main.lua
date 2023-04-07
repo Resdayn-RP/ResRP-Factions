@@ -1,4 +1,4 @@
-if not ResdaynRP then return end
+if not ResdaynCore then return end
 
 ---@class factions
 local factions = {}
