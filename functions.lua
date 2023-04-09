@@ -47,14 +47,15 @@ function functions.generateFactionId()
 end
 
 ---@param pid integer
----@return integer|boolean pid
+---@return integer|nil isInFaction
+function functions.isInFaction(pid)
     local dbTable = HebiDB:getTable()
     for _, table in pairs(dbTable) do
         for _, player in pairs(table) do
             if Players[pid].name == player.name and player.factionId then return player.factionId end
         end
     end
-    return false
+    return nil
 end
 
 ---@param source integer SourcePlayerId
