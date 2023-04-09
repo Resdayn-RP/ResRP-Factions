@@ -13,24 +13,24 @@ function factions.createFaction(pid, name)
     faction.name = name
     faction.leader = ResdaynCore.functions.getDbID(Players[pid].name)
     HebiDB:insertToTable('factions', {faction})
+    factions.functions.changePlayerFaction(pid, faction.factionId)
 end
 
 ---@param pid integer
 ---@param targetPid integer
 function factions.invitePlayer(pid, targetPid)
     if not factions.functions.isLeader(pid) or targetPid == pid then return end
-
-    local dbTable = HebiDB.Table
-
-    for i, table in pairs(dbTable) do
-        for j, faction in pairs(table) do
-            if faction.leader == ResdaynCore.functions.getDbID(Players[pid].name) then 
-                TableHelper.insertValues(HebiDB.Table[i][j], ResdaynCore.functions.getDbID(Players[targetPid].name), true)
-            end
-        end
-    end
+    local factionId = factions.functions.isInFaction(pid)
+    factions.functions.changePlayerFaction(pid, factionId) 
 end
 
+---@param pid integer
+function factions.leaveFaction(pid)
+    if not pid then return end
+    factions.functions.changePlayerFaction(pid, nil)
+end
+
+customCommandHooks.registerCommand("gquit", factions.leaveFaction)
 customCommandHooks.registerCommand("createFaction", factions.createFaction)
 customCommandHooks.registerCommand("invitePlayer", factions.invitePlayer)
 

@@ -46,4 +46,41 @@ function functions.generateFactionId()
     return id
 end
 
+---@param pid integer
+---@return integer|boolean pid
+    local dbTable = HebiDB:getTable()
+    for _, table in pairs(dbTable) do
+        for _, player in pairs(table) do
+            if Players[pid].name == player.name and player.factionId then return player.factionId end
+        end
+    end
+    return false
+end
+
+---@param source integer SourcePlayerId
+---@param target integer TargetPlayerId
+---@return boolean isSameFaction
+function functions.isPartOfSameFaction(source, target)
+    if not target then return false end
+    local sourceFac, targetFac = functions.isInFaction(source), functions.isInFaction(target)
+    if not (sourceFac or targetFac) and sourceFac == targetFac then return true end
+    return false
+end
+
+---@param target integer target player id
+---@param factionId integer|nil faction id
+function functions.changePlayerFaction(target, factionId)
+    if not target then return end
+    
+    for i, table in pairs(HebiDB.Table) do
+        for j, player in pairs(table) do
+            if player.name == Players[target].name then
+                HebiDB.Table[i][j].factionId = factionId
+                return
+            end
+        end
+    end
+end
+
+
 return functions
