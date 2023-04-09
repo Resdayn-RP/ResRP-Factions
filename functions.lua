@@ -18,7 +18,7 @@ end
 function functions.isLeader(pid)
     local factionTable = HebiDB:getTable()
     for _, table in pairs(factionTable) do
-        for _, faction in pairs(Table) do
+        for _, faction in pairs(table) do
             if faction.leader == ResdaynCore.functions.getDbID(Players[pid].name) then return true end
         end
     end
