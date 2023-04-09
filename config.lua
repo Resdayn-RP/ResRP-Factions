@@ -7,7 +7,7 @@ tableConfig['factions'] = {
     name = nil,
     factionId = nil,
     members = {},
-    leader = {}
+    leader = nil
 }
 
-return config, tableConfig
+return tableConfig
