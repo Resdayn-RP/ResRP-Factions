@@ -1,6 +1,18 @@
 ---@class functions
 local functions = {}
 
+---@param message table
+---@return string text
+function functions.concatenateName(message)
+    local text = ""
+    for i, j in pairs(message) do
+        if i ~= 1 then
+            text = text .. " " .. j
+        end
+    end
+    return text
+end
+
 ---@param name string
 ---@return integer|nil dbid
 function functions.getGroupId(name)
