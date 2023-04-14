@@ -28,7 +28,7 @@ end
 
 ---@param pid integer
 function factions.leaveFaction(pid)
-    if not (pid and factions.functions.isLeader(pid)) then return end
+    if not pid and factions.functions.isLeader(pid) then return end
     factions.functions.changePlayerFaction(pid, nil)
 end
 
