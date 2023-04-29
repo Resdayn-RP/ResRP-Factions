@@ -49,10 +49,22 @@ function factions.claimLandCommand(pid)
     factions.plots.claimLand(pid, factionId)
 end
 
+---@param eventStatus table
+function factions.onServerPostInit(eventStatus)
+    local dbTable, cells = HebiDB:GetTable(), factions.config.claimableCells
+    if dbTable.claimanbleCells then return end
+
+    HebiDB:insertToTable('claimableCells', { cells })
+    HebiDB:writeTable()
+    return eventStatus
+end
+
 customCommandHooks.registerCommand('buyPlotMarker', factions.buyPlotMarkerCommand)
 customCommandHooks.registerCommand('claimLand', factions.claimLandCommand)
 customCommandHooks.registerCommand("gquit", factions.leaveFaction)
 customCommandHooks.registerCommand("createFaction", factions.createFaction)
 customCommandHooks.registerCommand("invitePlayer", factions.invitePlayer)
+
+customEventHooks.registerHandler("onServerPostInit", factions.onServerPostInit)
 
 return factions

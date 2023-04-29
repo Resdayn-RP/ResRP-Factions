@@ -11,7 +11,7 @@ config['factions'] = {
     plotCell = '',
 }
 
-config.claimableCells = {
+config['claimableCells'] = {
     ['Ald-ruhn, Morag Tong Guildhall'] = false,
 }
 
