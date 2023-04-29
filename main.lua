@@ -2,9 +2,9 @@ if not ResdaynCore then return end
 
 ---@class factions
 local factions = {}
+
 factions.config = require "custom.ResdaynFactions.config"
 factions.functions = require "custom.ResdaynFactions.functions"
-
 factions.plots = require "custom.ResdaynFactions.plots.main"
 
 ---@param pid integer

@@ -7,7 +7,7 @@ function functions.hasPlotMarker(factionId)
     local dbTable = HebiDB:GetTable()
     for i, table in pairs(dbTable) do
         if i == 'factions' then
-            for j, factions in dbTable[i] do
+            for _, factions in pairs(table) do
                 if factions.factionId == factionId then
                     return factions.hasPlotMarker
                 end
