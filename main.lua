@@ -11,7 +11,7 @@ factions.plots = require "custom.ResdaynFactions.plots.main"
 ---@param name table
 function factions.createFaction(pid, name)
     if factions.functions.isInFaction(pid) then return end
-    local faction = factions.config.tableConfig['factions']
+    local faction = factions.config['factions']
     faction.factionId = factions.functions.generateFactionId()
     faction.name = factions.functions.concatenateName(name)
     faction.leader = ResdaynCore.functions.getDbID(Players[pid].name)
@@ -52,7 +52,7 @@ end
 ---@param eventStatus table
 function factions.onServerPostInit(eventStatus)
     local dbTable, cells = HebiDB:GetTable(), factions.config.claimableCells
-    if dbTable.claimanbleCells then return end
+    if dbTable.claimanbleCells then return eventStatus end
 
     HebiDB:insertToTable('claimableCells', { cells })
     HebiDB:writeTable()
