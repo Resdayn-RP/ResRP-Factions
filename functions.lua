@@ -95,5 +95,42 @@ function functions.changePlayerFaction(target, factionId)
     end
 end
 
+---@param pid number
+---@param cmd table
+function functions.addToBalance(pid, cmd)
+    local faction = functions.isInFaction(pid)
+    if not (faction or cmd[2]) then return end
+    
+    local dbId = ResdaynCore.functions.getDbId(Players[pid].name)
+
+    ResdaynCore.functions.removeMoney(dbId, tonumber(cmd[2]))
+
+    for i, table in pairs(HebiDB.Table) do
+        for j, faction in pairs(table) do
+            if faction.factionId == faction then
+                HebiDB.Table[i][j] = faction.balance + tonumber(cmd[2])
+            end
+        end
+    end
+end
+
+---@param pid number
+---@param amount integer
+function functions.RemoveFromBalance(pid, amount)
+    local faction = functions.isInFaction(pid)
+    if not (faction or cmd[2] or functions.isLeader(pid)) then return end
+
+    local dbId = ResdaynCore.functions.getDbId(Players[pid].name)
+
+    ResdaynCore.functions.addMoney(dbId, amount)
+
+    for i, table in pairs(HebiDB.Table) do
+        for j, faction in pairs(table) do
+            if faction.factionId == faction then
+                HebiDB.Table[i][j] = faction.balance - tonumber(amount)
+            end
+        end
+    end
+end
 
 return functions

@@ -1,13 +1,18 @@
 ---@class config
 local config = {}
----@class tableConfig
-local tableConfig = {}
 
-tableConfig['factions'] = {
+config['factions'] = {
     name = nil,
     factionId = nil,
     members = {},
-    leader = nil
+    leader = nil,
+    balance = 0,
+    hasPlotItem = false,
+    plotCell = '',
 }
 
-return tableConfig
+config.claimableCells = {
+    ['Ald-ruhn, Morag Tong Guildhall'] = false,
+}
+
+return config

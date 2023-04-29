@@ -2,14 +2,16 @@ if not ResdaynCore then return end
 
 ---@class factions
 local factions = {}
-factions.tableConfig = require "custom.ResdaynFactions.config"
+factions.config = require "custom.ResdaynFactions.config"
 factions.functions = require "custom.ResdaynFactions.functions"
+
+factions.plots = require "custom.ResdaynFactions.plots.main"
 
 ---@param pid integer
 ---@param name table
 function factions.createFaction(pid, name)
     if factions.functions.isInFaction(pid) then return end
-    local faction = factions.tableConfig['factions']
+    local faction = factions.config.tableConfig['factions']
     faction.factionId = factions.functions.generateFactionId()
     faction.name = factions.functions.concatenateName(name)
     faction.leader = ResdaynCore.functions.getDbID(Players[pid].name)
@@ -32,6 +34,23 @@ function factions.leaveFaction(pid)
     factions.functions.changePlayerFaction(pid, nil)
 end
 
+---@param pid integer
+function factions.buyPlotMarkerCommand(pid)
+    local factionId = factions.functions.isInFaction(pid)
+    if not (factionId or factions.functions.isLeader(pid)) then return end
+    factions.functions.RemoveFromBalance(pid, 0)
+    factions.plots.functions.setPlotMarker(factionId)
+end
+
+---@param pid integer
+function factions.claimLandCommand(pid)
+    local factionId = not factions.functions.isInFaction(pid)
+    if not (factionId or factions.functions.isLeader(pid)) then return end
+    factions.plots.claimLand(pid, factionId)
+end
+
+customCommandHooks.registerCommand('buyPlotMarker', factions.buyPlotMarkerCommand)
+customCommandHooks.registerCommand('claimLand', factions.claimLandCommand)
 customCommandHooks.registerCommand("gquit", factions.leaveFaction)
 customCommandHooks.registerCommand("createFaction", factions.createFaction)
 customCommandHooks.registerCommand("invitePlayer", factions.invitePlayer)
