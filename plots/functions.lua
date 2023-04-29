@@ -55,7 +55,7 @@ function functions.hasPlot(factionId)
     local dbTable = HebiDB:GetTable()
     for _, table in pairs(dbTable) do
         for _, factions in pairs(table) do
-            if factions.factionId and factions.plotCell then
+            if factions.factionId == factionId and factions.plotCell then
                 return factions.plotCell ~= ''
             end
         end
